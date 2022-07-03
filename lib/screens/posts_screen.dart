@@ -8,6 +8,8 @@ class ProviderScreen extends StatelessWidget {
     final postPRO = context.watch<PostDataProvider>.call();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: postPRO.getPostData, icon: const Icon(Icons.refresh)),
         title: Text(postPRO.post.title ?? ""),
       ),
       body: RefreshIndicator(
