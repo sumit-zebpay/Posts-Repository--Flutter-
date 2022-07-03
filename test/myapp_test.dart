@@ -29,7 +29,8 @@ void main() {
       expect(await api.getAllPosts(), isA<PostModel>());
     });
 
-    test('throws an exception if the http call completes with an error', () {
+    test('throws an exception if the http call completes with an error',
+        () async {
       final client = MockClient();
 
       // Use Mockito to return a successful response when it calls the
@@ -37,8 +38,8 @@ void main() {
       when(client.get(Uri.parse('http://localhost:8080/')))
           .thenAnswer((_) async => http.Response("Not Found", 404));
       ApiService api = ApiService(client);
-
-      expect(api.getAllPosts(), throwsException);
+      final post = await api.getAllPosts();
+      expect(post.error, Strings.errorMessage);
     });
   });
 }

@@ -32,9 +32,9 @@ Widget body(BuildContext context) {
                     },
                   )
                 : ListView.builder(
-                    itemCount: postPRO.posts.length,
+                    itemCount: postPRO.posts?.length,
                     itemBuilder: (context, index) {
-                      return CustomListItem(postPRO.posts[index]);
+                      return CustomListItem(postPRO.posts![index]);
                     },
                   ),
       ),

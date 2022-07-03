@@ -10,7 +10,7 @@ class ProviderScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: postPRO.getPostData, icon: const Icon(Icons.refresh)),
-        title: Text(postPRO.post.title ?? ""),
+        title: Text(postPRO.post?.title ?? ""),
         actions: [
           IconButton(
               onPressed: () => postPRO.enableSearch
@@ -27,9 +27,11 @@ class ProviderScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: postPRO.loading
                   ? const Center(child: CircularProgressIndicator())
-                  : postPRO.post.rows == null
-                      ? const Center(child: Text(Strings.noRows))
-                      : body(context))),
+                  : postPRO.post?.error != null
+                      ? const Center(child: Text(Strings.somethingWentWrong))
+                      : postPRO.post?.rows == null
+                          ? const Center(child: Text(Strings.noRows))
+                          : body(context))),
     );
   }
 }

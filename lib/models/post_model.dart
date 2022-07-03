@@ -1,5 +1,5 @@
 class PostModel {
-  Exception? error;
+  String? error;
   String? title;
   List<Rows>? rows;
 

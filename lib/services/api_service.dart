@@ -16,7 +16,9 @@ class ApiService {
         throw Exception(Strings.errorMessage);
       }
     } catch (e) {
-      throw Exception(Strings.errorMessage);
+      final post = PostModel();
+      post.error = Strings.errorMessage;
+      return post;
     }
   }
 }

@@ -2,8 +2,8 @@ import '../index.dart';
 import 'package:http/http.dart' as http;
 
 class PostDataProvider with ChangeNotifier {
-  PostModel post = PostModel();
-  List<Rows> posts = <Rows>[];
+  PostModel? post = PostModel();
+  List<Rows>? posts = <Rows>[];
   List<Rows> foundPosts = <Rows>[];
   BuildContext? context;
   bool loading = false;
@@ -34,9 +34,9 @@ class PostDataProvider with ChangeNotifier {
 
   Future<void> getPostData() async {
     isLoading = true;
-    post = (await api?.getAllPosts())!;
-    if (post.rows != null) {
-      posts = post.rows!;
+    post = await api?.getAllPosts();
+    if (post?.rows != null) {
+      posts = post?.rows;
     }
     isLoading = false;
     notifyListeners();
@@ -49,7 +49,7 @@ class PostDataProvider with ChangeNotifier {
       return;
     }
 
-    for (var userDetail in posts) {
+    for (var userDetail in posts!) {
       if (userDetail.title != null) {
         if (userDetail.title!.toLowerCase().contains(text.toLowerCase())) {
           foundPosts.add(userDetail);
