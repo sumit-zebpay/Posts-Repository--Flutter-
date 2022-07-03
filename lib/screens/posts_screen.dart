@@ -11,6 +11,15 @@ class ProviderScreen extends StatelessWidget {
         leading: IconButton(
             onPressed: postPRO.getPostData, icon: const Icon(Icons.refresh)),
         title: Text(postPRO.post.title ?? ""),
+        actions: [
+          IconButton(
+              onPressed: () => postPRO.enableSearch
+                  ? postPRO.toggleSearch = false
+                  : postPRO.toggleSearch = true,
+              icon: postPRO.enableSearch
+                  ? const Icon(Icons.close)
+                  : const Icon(Icons.search_outlined))
+        ],
       ),
       body: RefreshIndicator(
           onRefresh: postPRO.getPostData,
