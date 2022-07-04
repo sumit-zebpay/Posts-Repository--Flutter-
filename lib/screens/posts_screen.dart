@@ -5,33 +5,38 @@ class ProviderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postPRO = context.watch<PostDataProvider>.call();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: postPRO.getPostData, icon: const Icon(Icons.refresh)),
-        title: Text(postPRO.post?.title ?? ""),
-        actions: [
-          IconButton(
-              onPressed: () => postPRO.enableSearch
-                  ? postPRO.toggleSearch = false
-                  : postPRO.toggleSearch = true,
-              icon: postPRO.enableSearch
-                  ? const Icon(Icons.close)
-                  : const Icon(Icons.search_outlined))
-        ],
-      ),
-      body: RefreshIndicator(
-          onRefresh: postPRO.getPostData,
-          child: Container(
-              padding: const EdgeInsets.all(20),
-              child: postPRO.loading
-                  ? const Center(child: CircularProgressIndicator())
-                  : postPRO.post?.error != null
-                      ? const Center(child: Text(Strings.somethingWentWrong))
-                      : postPRO.post?.rows == null
-                          ? const Center(child: Text(Strings.noRows))
-                          : body(context))),
-    );
+        appBar: AppBar(
+          leading: Consumer<PostDataProvider>(
+              builder: (context, postDataProvider, child) => IconButton(
+                  onPressed: postDataProvider.getPostData,
+                  icon: const Icon(Icons.refresh))),
+          title: Consumer<PostDataProvider>(
+              builder: (context, postDataProvider, child) =>
+                  Text(postDataProvider.post?.title ?? "")),
+          actions: [
+            Consumer<PostDataProvider>(
+                builder: (context, postDataProvider, child) => IconButton(
+                    onPressed: () => postDataProvider.enableSearch
+                        ? postDataProvider.toggleSearch = false
+                        : postDataProvider.toggleSearch = true,
+                    icon: postDataProvider.enableSearch
+                        ? const Icon(Icons.close)
+                        : const Icon(Icons.search_outlined)))
+          ],
+        ),
+        body: Consumer<PostDataProvider>(
+          builder: (context, postDataProvider, child) => RefreshIndicator(
+              onRefresh: postDataProvider.getPostData,
+              child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: postDataProvider.loading
+                      ? const Center(child: CircularProgressIndicator())
+                      : postDataProvider.post?.error != null
+                          ? somethingWentWrong
+                          : postDataProvider.post?.rows == null
+                              ? const Center(child: Text(Strings.noRows))
+                              : body(context))),
+        ));
   }
 }

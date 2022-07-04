@@ -14,3 +14,4 @@ export '../services/api_service.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'constants/strings.dart';
 export '../constants/constant.dart';
+export '../widgets/utils_widget.dart';
